@@ -21,8 +21,6 @@ example in `examples/Green/` — neutral stone-grey neutrals with a deep
 forest-green primary accent. Match it. Consistency is the point: these
 files should feel like a coherent body of work, not 20 different attempts.
 
-An archived copy of the original Anthropic ivory/clay set lives in
-`examples/Anthropic/` for reference, but new work should use the Green set.
 
 ## When to use this skill
 
@@ -93,8 +91,8 @@ Every example uses these tokens. Copy them verbatim into `:root` and
 }
 ```
 
-Token names are retained from the original Anthropic set so every file
-keeps a consistent contract (`--clay` is still the primary-accent slot,
+Token names are retained for compatibility across every file, so the examples
+keep a consistent contract (`--clay` is still the primary-accent slot,
 even though its value is now green). Don't rename them.
 
 **Type:**
@@ -207,9 +205,7 @@ For arrows, define a single `<marker>` and reuse it. Example:
 - `examples/Green/index.html` — the canonical catalog page; mirrors the
   design system in its purest form.
 - `examples/Green/05-design-system.html` and `examples/Green/14-research-feature-explainer.html`
-  also include a built-in palette switcher (17 named palettes) for live
+  also include a built-in palette switcher with named palettes for live
   comparison if you need to evaluate alternatives.
-- `examples/Anthropic/` — the original Anthropic ivory/clay set, preserved
-  for historical reference. Don't pull from here for new work.
 - `MANIFESTO.md` — the philosophical backing (Thariq's original post).
   Skim this if the user pushes back on "why HTML instead of markdown".

@@ -220,9 +220,9 @@
 
   /* ── alternate palettes ────────────────────────────────────
      Each rule overrides the same nine tokens defined in :root.
-     `anthropic` is the default and lives in :root, so it has no rule. */
+     Each alternate palette is selected with data-palette. */
 
-  /* Earthy alternates (close to but distinct from Anthropic) */
+  /* Earthy alternates */
   html[data-palette="botanical"]  { --ivory:#F4F2E8; --slate:#1A1D17; --clay:#4F6B3A; --oat:#DDE1CC; --olive:#C49A3F; --gray-150:#ECEBE2; --gray-300:#C9C8BC; --gray-500:#7E7E7E; --gray-700:#34352E; }
   html[data-palette="foundry"]    { --ivory:#F2EDE2; --slate:#1B1614; --clay:#9A4030; --oat:#E2D8C5; --olive:#2F4F4A; --gray-150:#EAE3D5; --gray-300:#C8BFAF; --gray-500:#857F72; --gray-700:#2E2925; }
   html[data-palette="apothecary"] { --ivory:#F4EFE2; --slate:#1F1A12; --clay:#B8862E; --oat:#ECE3CB; --olive:#3C5A3C; --gray-150:#ECE6D5; --gray-300:#CBC2A8; --gray-500:#8A8270; --gray-700:#322B1F; }
@@ -241,7 +241,6 @@
   html[data-palette="indigo"]            { --ivory:#F5F7FA; --slate:#1F2933; --clay:#4055A8; --oat:#BED0F7; --olive:#2D3A8C; --gray-150:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
   html[data-palette="pink-vivid"]        { --ivory:#F5F7FA; --slate:#1F2933; --clay:#BC0A6F; --oat:#FFE3EC; --olive:#870557; --gray-150:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
   html[data-palette="green-pure"]        { --ivory:#F7F7F7; --slate:#222222; --clay:#2F8132; --oat:#C1EAC5; --olive:#0E5814; --gray-150:#E1E1E1; --gray-300:#B1B1B1; --gray-500:#7E7E7E; --gray-700:#515151; }
-  html[data-palette="anthropic"]         { --ivory:#FAF9F5; --slate:#141413; --clay:#D97757; --oat:#E3DACC; --olive:#788C5D; --gray-150:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F; --gray-700:#3D3D3A; }
 
   /* ── palette switcher ──────────────────────────── */
   .palette-switcher {
@@ -359,15 +358,6 @@
   </button>
   <div class="palette-switcher__menu" id="palette-menu" hidden>
     <div class="palette-switcher__group">Earthy</div>
-    <button class="palette-switcher__option" type="button" data-palette="anthropic" data-label="Anthropic">
-      <span class="palette-switcher__option-name">Anthropic</span>
-      <span class="palette-switcher__swatches" aria-hidden="true">
-        <span class="palette-switcher__chip" style="background:#FAF9F5"></span>
-        <span class="palette-switcher__chip" style="background:#D97757"></span>
-        <span class="palette-switcher__chip" style="background:#788C5D"></span>
-        <span class="palette-switcher__chip" style="background:#141413"></span>
-      </span>
-    </button>
     <button class="palette-switcher__option" type="button" data-palette="botanical" data-label="Botanical">
       <span class="palette-switcher__option-name">Botanical</span>
       <span class="palette-switcher__swatches" aria-hidden="true">
