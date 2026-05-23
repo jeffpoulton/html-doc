@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acme — Design System Reference</title>
+<style>
+  :root {
+    --ivory: #FAF9F5;
+    --slate: #141413;
+    --clay: #D97757;
+    --oat: #E3DACC;
+    --olive: #788C5D;
+    --gray-100: #F0EEE6;
+    --gray-300: #D1CFC5;
+    --gray-500: #87867F;
+    --gray-700: #3D3D3A;
+    --white: #FFFFFF;
+
+    /* Semantic, fixed across palettes (roles, not brand) */
+    --success: #788C5D;
+    --warning: #C78E3F;
+    --danger:  #B04A4A;
+    --info:    #5C7CA3;
+
+    --serif: ui-serif, Georgia, serif;
+    --sans: system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+    --radius-panel: 12px;
+    --radius-row: 8px;
+    --border: 1.5px solid var(--gray-300);
+  }
+
+  /* Alternate palettes: override the nine brand tokens. Semantic tokens stay. */
+  html[data-palette="botanical"]         { --ivory:#F4F2E8; --slate:#1A1D17; --clay:#4F6B3A; --oat:#DDE1CC; --olive:#C49A3F; --gray-100:#ECEBE2; --gray-300:#C9C8BC; --gray-500:#87867F; --gray-700:#34352E; }
+  html[data-palette="foundry"]           { --ivory:#F2EDE2; --slate:#1B1614; --clay:#9A4030; --oat:#E2D8C5; --olive:#2F4F4A; --gray-100:#EAE3D5; --gray-300:#C8BFAF; --gray-500:#857F72; --gray-700:#2E2925; }
+  html[data-palette="apothecary"]        { --ivory:#F4EFE2; --slate:#1F1A12; --clay:#B8862E; --oat:#ECE3CB; --olive:#3C5A3C; --gray-100:#ECE6D5; --gray-300:#CBC2A8; --gray-500:#8A8270; --gray-700:#322B1F; }
+  html[data-palette="cyan-blue-grey"]    { --ivory:#F0F4F8; --slate:#102A43; --clay:#14919B; --oat:#BEF8FD; --olive:#0A6C74; --gray-100:#D9E2EC; --gray-300:#9FB3C8; --gray-500:#627D98; --gray-700:#334E68; }
+  html[data-palette="blue-yellow"]       { --ivory:#F0F4F8; --slate:#102A43; --clay:#186FAF; --oat:#FFF3C4; --olive:#DE911D; --gray-100:#D9E2EC; --gray-300:#9FB3C8; --gray-500:#627D98; --gray-700:#334E68; }
+  html[data-palette="purple-teal"]       { --ivory:#F0F4F8; --slate:#102A43; --clay:#4D3DF7; --oat:#C6F7E2; --olive:#199473; --gray-100:#D9E2EC; --gray-300:#9FB3C8; --gray-500:#627D98; --gray-700:#334E68; }
+  html[data-palette="teal-blue-grey"]    { --ivory:#F0F4F8; --slate:#102A43; --clay:#199473; --oat:#C6F7E2; --olive:#0C6B58; --gray-100:#D9E2EC; --gray-300:#9FB3C8; --gray-500:#627D98; --gray-700:#334E68; }
+  html[data-palette="blue-grey-mono"]    { --ivory:#F0F4F8; --slate:#102A43; --clay:#486581; --oat:#D9E2EC; --olive:#243B53; --gray-100:#D9E2EC; --gray-300:#9FB3C8; --gray-500:#627D98; --gray-700:#334E68; }
+  html[data-palette="red-warm"]          { --ivory:#FAF9F7; --slate:#27241D; --clay:#A61B1B; --oat:#FFF3C4; --olive:#DE911D; --gray-100:#E8E6E1; --gray-300:#B8B2A7; --gray-500:#857F72; --gray-700:#504A40; }
+  html[data-palette="cyan-warm"]         { --ivory:#FAF9F7; --slate:#27241D; --clay:#14919B; --oat:#BEF8FD; --olive:#0A6C74; --gray-100:#E8E6E1; --gray-300:#B8B2A7; --gray-500:#857F72; --gray-700:#504A40; }
+  html[data-palette="indigo-warm"]       { --ivory:#FAF9F7; --slate:#27241D; --clay:#4055A8; --oat:#BED0F7; --olive:#2D3A8C; --gray-100:#E8E6E1; --gray-300:#B8B2A7; --gray-500:#857F72; --gray-700:#504A40; }
+  html[data-palette="blue-vivid"]        { --ivory:#F5F7FA; --slate:#1F2933; --clay:#0552B5; --oat:#BAE3FF; --olive:#CF1124; --gray-100:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
+  html[data-palette="light-blue-vivid"]  { --ivory:#F5F7FA; --slate:#1F2933; --clay:#1992D4; --oat:#B3ECFF; --olive:#0B69A3; --gray-100:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
+  html[data-palette="indigo"]            { --ivory:#F5F7FA; --slate:#1F2933; --clay:#4055A8; --oat:#BED0F7; --olive:#2D3A8C; --gray-100:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
+  html[data-palette="pink-vivid"]        { --ivory:#F5F7FA; --slate:#1F2933; --clay:#BC0A6F; --oat:#FFE3EC; --olive:#870557; --gray-100:#E4E7EB; --gray-300:#9AA5B1; --gray-500:#616E7C; --gray-700:#3E4C59; }
+  html[data-palette="green-pure"]        { --ivory:#F7F7F7; --slate:#222222; --clay:#2F8132; --oat:#C1EAC5; --olive:#0E5814; --gray-100:#E1E1E1; --gray-300:#B1B1B1; --gray-500:#7E7E7E; --gray-700:#515151; }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 56px 24px 96px;
+    background: var(--ivory);
+    color: var(--slate);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 40px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  header .sub {
+    color: var(--gray-500);
+    font-size: 14px;
+    margin: 0 0 48px;
+  }
+  header .sub code {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--gray-100);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  section { margin-bottom: 64px; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--gray-300);
+    margin: 0 0 28px;
+  }
+
+  /* ---------- Color ---------- */
+  .swatch-group {
+    margin-bottom: 28px;
+  }
+  .swatch-group-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 20px 16px;
+  }
+  .swatch .chip {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-row);
+    border: var(--border);
+    margin-bottom: 8px;
+  }
+  .swatch .chip.no-border { border-color: transparent; }
+  .swatch .hex {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gray-700);
+    display: block;
+  }
+  .swatch .token {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    display: block;
+  }
+
+  /* ---------- Typography ---------- */
+  .type-scale {
+    border: var(--border);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    overflow: hidden;
+  }
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-specimen {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--slate);
+  }
+  .type-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gray-500);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .type-meta .name {
+    color: var(--gray-700);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .t-display  { font-family: var(--serif); font-size: 48px; line-height: 1.1;  font-weight: 500; letter-spacing: -0.02em; }
+  .t-h1       { font-family: var(--serif); font-size: 32px; line-height: 1.2;  font-weight: 500; letter-spacing: -0.01em; }
+  .t-h2       { font-family: var(--serif); font-size: 24px; line-height: 1.3;  font-weight: 500; }
+  .t-body     { font-family: var(--sans);  font-size: 16px; line-height: 1.55; font-weight: 430; }
+  .t-small    { font-family: var(--sans);  font-size: 14px; line-height: 1.5;  font-weight: 430; }
+  .t-caption  { font-family: var(--sans);  font-size: 12px; line-height: 1.4;  font-weight: 500; color: var(--gray-500); }
+
+  /* ---------- Spacing ---------- */
+  .spacing-ruler {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    padding: 28px 24px;
+    background: var(--white);
+    border: var(--border);
+    border-radius: var(--radius-panel);
+    overflow-x: auto;
+  }
+  .space-token {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .space-bar {
+    background: var(--clay);
+    border-radius: 3px;
+    height: 14px;
+  }
+  .space-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-700);
+    text-align: center;
+  }
+  .space-label span {
+    display: block;
+    color: var(--gray-500);
+  }
+
+  /* ---------- Radius & Elevation ---------- */
+  .token-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .radius-card {
+    width: 120px;
+    height: 88px;
+    background: var(--oat);
+    border: var(--border);
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+  }
+  .radius-card .lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-700);
+  }
+  .radius-card .lbl span { color: var(--gray-500); display: block; }
+
+  .shadow-card {
+    width: 160px;
+    height: 96px;
+    background: var(--white);
+    border-radius: var(--radius-panel);
+    display: flex;
+    align-items: flex-end;
+    padding: 12px 14px;
+  }
+  .shadow-card .lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-700);
+  }
+  .shadow-card .lbl span { color: var(--gray-500); display: block; }
+
+  /* ---------- Core components ---------- */
+  .component {
+    margin-bottom: 32px;
+  }
+  .component-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+  .component-stage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: var(--white);
+    border: var(--border);
+    border-radius: var(--radius-panel);
+  }
+
+  /* Button */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius-row);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .btn-primary   { background: var(--clay); color: var(--white); }
+  .btn-primary:hover { background: color-mix(in oklch, var(--clay) 82%, black); }
+  .btn-secondary { background: var(--white); color: var(--slate); border-color: var(--gray-300); }
+  .btn-secondary:hover { background: var(--gray-100); }
+  .btn-ghost     { background: transparent; color: var(--gray-700); }
+  .btn-ghost:hover { background: var(--gray-100); }
+  .btn-danger    { background: var(--danger); color: var(--white); }
+  .btn-danger:hover { background: color-mix(in oklch, var(--danger) 82%, black); }
+
+  /* Input */
+  .input {
+    height: 38px;
+    padding: 0 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--slate);
+    background: var(--white);
+    border: var(--border);
+    border-radius: var(--radius-row);
+    width: 260px;
+    outline: none;
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .input::placeholder { color: var(--gray-500); }
+  .input:focus {
+    border-color: var(--clay);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--clay) 22%, transparent);
+  }
+
+  /* Checkbox */
+  .checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .checkbox input {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--white);
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .checkbox input:checked {
+    background: var(--clay);
+    border-color: var(--clay);
+  }
+  .checkbox input:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px; top: 1px;
+    width: 5px; height: 10px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 9px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+  }
+  .badge-neutral { background: var(--gray-100); color: var(--gray-700); }
+  .badge-accent  { background: color-mix(in oklch, var(--clay) 14%, transparent); color: var(--clay); }
+  .badge-success { background: color-mix(in oklch, var(--success) 16%, transparent); color: var(--success); }
+  .badge-warning { background: color-mix(in oklch, var(--warning) 16%, transparent); color: color-mix(in oklch, var(--warning) 78%, black); }
+
+  /* ---------- Palette switcher ---------- */
+  .palette-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    width: 296px;
+    background: var(--ivory);
+    border: 1.5px solid var(--gray-300);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+  .palette-switcher__trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--slate);
+    font: inherit;
+  }
+  .palette-switcher__trigger:hover { background: var(--gray-100); }
+  .palette-switcher__label { flex: 1; min-width: 0; }
+  .palette-switcher__title {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 2px;
+  }
+  .palette-switcher__name {
+    display: block;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--slate);
+    letter-spacing: -0.005em;
+  }
+  .palette-switcher__chev {
+    color: var(--gray-500);
+    font-size: 12px;
+    transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .palette-switcher__trigger[aria-expanded="true"] .palette-switcher__chev { transform: rotate(180deg); }
+  .palette-switcher__menu {
+    max-height: 70vh;
+    overflow-y: auto;
+    border-top: 1px solid var(--gray-300);
+    padding: 6px 0 10px;
+  }
+  .palette-switcher__menu[hidden] { display: none; }
+  .palette-switcher__group {
+    padding: 12px 16px 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+  .palette-switcher__option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 7px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: var(--gray-700);
+    font-size: 13.5px;
+  }
+  .palette-switcher__option:hover { background: var(--gray-100); color: var(--slate); }
+  .palette-switcher__option[aria-current="true"] {
+    background: var(--gray-100);
+    color: var(--slate);
+    font-weight: 500;
+  }
+  .palette-switcher__option-name { flex: 1; min-width: 0; }
+  .palette-switcher__swatches {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .palette-switcher__chip {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgba(20, 20, 19, 0.1);
+  }
+  @media (max-width: 720px) {
+    .palette-switcher { position: static; width: 100%; max-width: 980px; margin: 0 auto 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="palette-switcher" data-palette-switcher>
+  <button class="palette-switcher__trigger" type="button" aria-expanded="false" aria-controls="palette-menu">
+    <span class="palette-switcher__label">
+      <span class="palette-switcher__title">Palette</span>
+      <span class="palette-switcher__name" data-current-name>Anthropic</span>
+    </span>
+    <span class="palette-switcher__chev" aria-hidden="true">▾</span>
+  </button>
+  <div class="palette-switcher__menu" id="palette-menu" hidden>
+    <div class="palette-switcher__group">Earthy</div>
+    <button class="palette-switcher__option" type="button" data-palette="anthropic" data-label="Anthropic" aria-current="true">
+      <span class="palette-switcher__option-name">Anthropic</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#FAF9F5"></span>
+        <span class="palette-switcher__chip" style="background:#D97757"></span>
+        <span class="palette-switcher__chip" style="background:#788C5D"></span>
+        <span class="palette-switcher__chip" style="background:#141413"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="botanical" data-label="Botanical">
+      <span class="palette-switcher__option-name">Botanical</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F4F2E8"></span>
+        <span class="palette-switcher__chip" style="background:#4F6B3A"></span>
+        <span class="palette-switcher__chip" style="background:#C49A3F"></span>
+        <span class="palette-switcher__chip" style="background:#1A1D17"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="foundry" data-label="Foundry">
+      <span class="palette-switcher__option-name">Foundry</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F2EDE2"></span>
+        <span class="palette-switcher__chip" style="background:#9A4030"></span>
+        <span class="palette-switcher__chip" style="background:#2F4F4A"></span>
+        <span class="palette-switcher__chip" style="background:#1B1614"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="apothecary" data-label="Apothecary">
+      <span class="palette-switcher__option-name">Apothecary</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F4EFE2"></span>
+        <span class="palette-switcher__chip" style="background:#B8862E"></span>
+        <span class="palette-switcher__chip" style="background:#3C5A3C"></span>
+        <span class="palette-switcher__chip" style="background:#1F1A12"></span>
+      </span>
+    </button>
+
+    <div class="palette-switcher__group">Refactoring UI</div>
+    <button class="palette-switcher__option" type="button" data-palette="cyan-blue-grey" data-label="Cyan + Blue Grey">
+      <span class="palette-switcher__option-name">Cyan + Blue Grey</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F0F4F8"></span>
+        <span class="palette-switcher__chip" style="background:#14919B"></span>
+        <span class="palette-switcher__chip" style="background:#0A6C74"></span>
+        <span class="palette-switcher__chip" style="background:#102A43"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="blue-yellow" data-label="Blue + Yellow">
+      <span class="palette-switcher__option-name">Blue + Yellow</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F0F4F8"></span>
+        <span class="palette-switcher__chip" style="background:#186FAF"></span>
+        <span class="palette-switcher__chip" style="background:#DE911D"></span>
+        <span class="palette-switcher__chip" style="background:#102A43"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="purple-teal" data-label="Purple + Teal">
+      <span class="palette-switcher__option-name">Purple + Teal</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F0F4F8"></span>
+        <span class="palette-switcher__chip" style="background:#4D3DF7"></span>
+        <span class="palette-switcher__chip" style="background:#199473"></span>
+        <span class="palette-switcher__chip" style="background:#102A43"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="teal-blue-grey" data-label="Teal">
+      <span class="palette-switcher__option-name">Teal</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F0F4F8"></span>
+        <span class="palette-switcher__chip" style="background:#199473"></span>
+        <span class="palette-switcher__chip" style="background:#0C6B58"></span>
+        <span class="palette-switcher__chip" style="background:#102A43"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="blue-grey-mono" data-label="Blue Grey">
+      <span class="palette-switcher__option-name">Blue Grey</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F0F4F8"></span>
+        <span class="palette-switcher__chip" style="background:#486581"></span>
+        <span class="palette-switcher__chip" style="background:#243B53"></span>
+        <span class="palette-switcher__chip" style="background:#102A43"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="red-warm" data-label="Red + Yellow">
+      <span class="palette-switcher__option-name">Red + Yellow</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#FAF9F7"></span>
+        <span class="palette-switcher__chip" style="background:#A61B1B"></span>
+        <span class="palette-switcher__chip" style="background:#DE911D"></span>
+        <span class="palette-switcher__chip" style="background:#27241D"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="cyan-warm" data-label="Cyan + Warm Grey">
+      <span class="palette-switcher__option-name">Cyan + Warm Grey</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#FAF9F7"></span>
+        <span class="palette-switcher__chip" style="background:#14919B"></span>
+        <span class="palette-switcher__chip" style="background:#0A6C74"></span>
+        <span class="palette-switcher__chip" style="background:#27241D"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="indigo-warm" data-label="Indigo + Warm Grey">
+      <span class="palette-switcher__option-name">Indigo + Warm Grey</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#FAF9F7"></span>
+        <span class="palette-switcher__chip" style="background:#4055A8"></span>
+        <span class="palette-switcher__chip" style="background:#2D3A8C"></span>
+        <span class="palette-switcher__chip" style="background:#27241D"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="blue-vivid" data-label="Blue Vivid">
+      <span class="palette-switcher__option-name">Blue Vivid</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F5F7FA"></span>
+        <span class="palette-switcher__chip" style="background:#0552B5"></span>
+        <span class="palette-switcher__chip" style="background:#CF1124"></span>
+        <span class="palette-switcher__chip" style="background:#1F2933"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="light-blue-vivid" data-label="Light Blue">
+      <span class="palette-switcher__option-name">Light Blue</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F5F7FA"></span>
+        <span class="palette-switcher__chip" style="background:#1992D4"></span>
+        <span class="palette-switcher__chip" style="background:#0B69A3"></span>
+        <span class="palette-switcher__chip" style="background:#1F2933"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="indigo" data-label="Indigo">
+      <span class="palette-switcher__option-name">Indigo</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F5F7FA"></span>
+        <span class="palette-switcher__chip" style="background:#4055A8"></span>
+        <span class="palette-switcher__chip" style="background:#2D3A8C"></span>
+        <span class="palette-switcher__chip" style="background:#1F2933"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="pink-vivid" data-label="Pink">
+      <span class="palette-switcher__option-name">Pink</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F5F7FA"></span>
+        <span class="palette-switcher__chip" style="background:#BC0A6F"></span>
+        <span class="palette-switcher__chip" style="background:#870557"></span>
+        <span class="palette-switcher__chip" style="background:#1F2933"></span>
+      </span>
+    </button>
+    <button class="palette-switcher__option" type="button" data-palette="green-pure" data-label="Green">
+      <span class="palette-switcher__option-name">Green</span>
+      <span class="palette-switcher__swatches" aria-hidden="true">
+        <span class="palette-switcher__chip" style="background:#F7F7F7"></span>
+        <span class="palette-switcher__chip" style="background:#2F8132"></span>
+        <span class="palette-switcher__chip" style="background:#0E5814"></span>
+        <span class="palette-switcher__chip" style="background:#222222"></span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+
+  <header>
+    <h1>Acme design system</h1>
+    <p class="sub">
+      Generated from <code>src/styles/tokens.ts</code> and <code>src/components/</code>. Use the palette switcher in the corner to preview every component across all 17 alternatives.
+    </p>
+  </header>
+
+  <!-- ===================== COLOR ===================== -->
+  <section id="color">
+    <h2>Color</h2>
+    <hr class="rule">
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Primary</div>
+      <div class="swatch-grid">
+        <div class="swatch" data-token="clay">
+          <div class="chip no-border" style="background:var(--clay)"></div>
+          <span class="hex" data-hex>#D97757</span>
+          <span class="token">--clay</span>
+        </div>
+        <div class="swatch" data-token="slate">
+          <div class="chip no-border" style="background:var(--slate)"></div>
+          <span class="hex" data-hex>#141413</span>
+          <span class="token">--slate</span>
+        </div>
+        <div class="swatch" data-token="ivory">
+          <div class="chip" style="background:var(--ivory)"></div>
+          <span class="hex" data-hex>#FAF9F5</span>
+          <span class="token">--ivory</span>
+        </div>
+        <div class="swatch" data-token="oat">
+          <div class="chip no-border" style="background:var(--oat)"></div>
+          <span class="hex" data-hex>#E3DACC</span>
+          <span class="token">--oat</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Neutral</div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="chip" style="background:#FFFFFF"></div>
+          <span class="hex">#FFFFFF</span>
+          <span class="token">--white</span>
+        </div>
+        <div class="swatch" data-token="gray-100">
+          <div class="chip" style="background:var(--gray-100)"></div>
+          <span class="hex" data-hex>#F0EEE6</span>
+          <span class="token">--gray-100</span>
+        </div>
+        <div class="swatch" data-token="gray-300">
+          <div class="chip no-border" style="background:var(--gray-300)"></div>
+          <span class="hex" data-hex>#D1CFC5</span>
+          <span class="token">--gray-300</span>
+        </div>
+        <div class="swatch" data-token="gray-500">
+          <div class="chip no-border" style="background:var(--gray-500)"></div>
+          <span class="hex" data-hex>#87867F</span>
+          <span class="token">--gray-500</span>
+        </div>
+        <div class="swatch" data-token="gray-700">
+          <div class="chip no-border" style="background:var(--gray-700)"></div>
+          <span class="hex" data-hex>#3D3D3A</span>
+          <span class="token">--gray-700</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Semantic (fixed across palettes)</div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="chip no-border" style="background:#788C5D"></div>
+          <span class="hex">#788C5D</span>
+          <span class="token">--success</span>
+        </div>
+        <div class="swatch">
+          <div class="chip no-border" style="background:#C78E3F"></div>
+          <span class="hex">#C78E3F</span>
+          <span class="token">--warning</span>
+        </div>
+        <div class="swatch">
+          <div class="chip no-border" style="background:#B04A4A"></div>
+          <span class="hex">#B04A4A</span>
+          <span class="token">--danger</span>
+        </div>
+        <div class="swatch">
+          <div class="chip no-border" style="background:#5C7CA3"></div>
+          <span class="hex">#5C7CA3</span>
+          <span class="token">--info</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TYPOGRAPHY ===================== -->
+  <section id="typography">
+    <h2>Typography</h2>
+    <hr class="rule">
+
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-specimen t-display">Plan the week ahead</div>
+        <div class="type-meta">
+          <span class="name">Display</span>
+          48 / 1.1 / 500
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen t-h1">Plan the week ahead</div>
+        <div class="type-meta">
+          <span class="name">Heading 1</span>
+          32 / 1.2 / 500
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen t-h2">Plan the week ahead</div>
+        <div class="type-meta">
+          <span class="name">Heading 2</span>
+          24 / 1.3 / 500
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen t-body">Review milestones, assign owners, and surface blockers before they cascade.</div>
+        <div class="type-meta">
+          <span class="name">Body</span>
+          16 / 1.55 / 430
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen t-small">Review milestones, assign owners, and surface blockers before they cascade.</div>
+        <div class="type-meta">
+          <span class="name">Small</span>
+          14 / 1.5 / 430
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-specimen t-caption">UPDATED 2 HOURS AGO</div>
+        <div class="type-meta">
+          <span class="name">Caption</span>
+          12 / 1.4 / 500
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SPACING ===================== -->
+  <section id="spacing">
+    <h2>Spacing</h2>
+    <hr class="rule">
+
+    <div class="spacing-ruler">
+      <div class="space-token">
+        <div class="space-bar" style="width:4px"></div>
+        <div class="space-label">4<span>--sp-1</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:8px"></div>
+        <div class="space-label">8<span>--sp-2</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:12px"></div>
+        <div class="space-label">12<span>--sp-3</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:16px"></div>
+        <div class="space-label">16<span>--sp-4</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:24px"></div>
+        <div class="space-label">24<span>--sp-5</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:32px"></div>
+        <div class="space-label">32<span>--sp-6</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:48px"></div>
+        <div class="space-label">48<span>--sp-7</span></div>
+      </div>
+      <div class="space-token">
+        <div class="space-bar" style="width:64px"></div>
+        <div class="space-label">64<span>--sp-8</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RADIUS & ELEVATION ===================== -->
+  <section id="shape">
+    <h2>Radius &amp; Elevation</h2>
+    <hr class="rule">
+
+    <div class="token-row">
+      <div class="radius-card" style="border-radius:4px">
+        <div class="lbl">4px<span>--r-xs</span></div>
+      </div>
+      <div class="radius-card" style="border-radius:8px">
+        <div class="lbl">8px<span>--r-sm</span></div>
+      </div>
+      <div class="radius-card" style="border-radius:12px">
+        <div class="lbl">12px<span>--r-md</span></div>
+      </div>
+      <div class="radius-card" style="border-radius:20px">
+        <div class="lbl">20px<span>--r-lg</span></div>
+      </div>
+    </div>
+
+    <div class="token-row">
+      <div class="shadow-card" style="box-shadow:0 1px 2px rgba(20,20,19,0.06)">
+        <div class="lbl">--shadow-sm<span>0 1px 2px / 6%</span></div>
+      </div>
+      <div class="shadow-card" style="box-shadow:0 4px 10px rgba(20,20,19,0.08)">
+        <div class="lbl">--shadow-md<span>0 4px 10px / 8%</span></div>
+      </div>
+      <div class="shadow-card" style="box-shadow:0 12px 28px rgba(20,20,19,0.12)">
+        <div class="lbl">--shadow-lg<span>0 12px 28px / 12%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CORE COMPONENTS ===================== -->
+  <section id="components">
+    <h2>Core components</h2>
+    <hr class="rule">
+
+    <div class="component">
+      <div class="component-name">&lt;Button /&gt;</div>
+      <div class="component-stage">
+        <button class="btn btn-primary">Create task</button>
+        <button class="btn btn-secondary">Cancel</button>
+        <button class="btn btn-ghost">Skip</button>
+        <button class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+
+    <div class="component">
+      <div class="component-name">&lt;Input /&gt;</div>
+      <div class="component-stage">
+        <input class="input" type="text" placeholder="Search tasks&hellip;">
+        <input class="input" type="text" value="Weekly planning">
+      </div>
+    </div>
+
+    <div class="component">
+      <div class="component-name">&lt;Checkbox /&gt;</div>
+      <div class="component-stage">
+        <label class="checkbox">
+          <input type="checkbox">
+          Notify assignees
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" checked>
+          Archive on complete
+        </label>
+      </div>
+    </div>
+
+    <div class="component">
+      <div class="component-name">&lt;Badge /&gt;</div>
+      <div class="component-stage">
+        <span class="badge badge-neutral">Draft</span>
+        <span class="badge badge-accent">In review</span>
+        <span class="badge badge-success">Done</span>
+        <span class="badge badge-warning">Overdue</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(() => {
+  const PALETTE_DATA = {
+    anthropic:        { ivory:"#FAF9F5", slate:"#141413", clay:"#D97757", oat:"#E3DACC", olive:"#788C5D", "gray-100":"#F0EEE6", "gray-300":"#D1CFC5", "gray-500":"#87867F", "gray-700":"#3D3D3A" },
+    botanical:        { ivory:"#F4F2E8", slate:"#1A1D17", clay:"#4F6B3A", oat:"#DDE1CC", olive:"#C49A3F", "gray-100":"#ECEBE2", "gray-300":"#C9C8BC", "gray-500":"#87867F", "gray-700":"#34352E" },
+    foundry:          { ivory:"#F2EDE2", slate:"#1B1614", clay:"#9A4030", oat:"#E2D8C5", olive:"#2F4F4A", "gray-100":"#EAE3D5", "gray-300":"#C8BFAF", "gray-500":"#857F72", "gray-700":"#2E2925" },
+    apothecary:       { ivory:"#F4EFE2", slate:"#1F1A12", clay:"#B8862E", oat:"#ECE3CB", olive:"#3C5A3C", "gray-100":"#ECE6D5", "gray-300":"#CBC2A8", "gray-500":"#8A8270", "gray-700":"#322B1F" },
+    "cyan-blue-grey": { ivory:"#F0F4F8", slate:"#102A43", clay:"#14919B", oat:"#BEF8FD", olive:"#0A6C74", "gray-100":"#D9E2EC", "gray-300":"#9FB3C8", "gray-500":"#627D98", "gray-700":"#334E68" },
+    "blue-yellow":    { ivory:"#F0F4F8", slate:"#102A43", clay:"#186FAF", oat:"#FFF3C4", olive:"#DE911D", "gray-100":"#D9E2EC", "gray-300":"#9FB3C8", "gray-500":"#627D98", "gray-700":"#334E68" },
+    "purple-teal":    { ivory:"#F0F4F8", slate:"#102A43", clay:"#4D3DF7", oat:"#C6F7E2", olive:"#199473", "gray-100":"#D9E2EC", "gray-300":"#9FB3C8", "gray-500":"#627D98", "gray-700":"#334E68" },
+    "teal-blue-grey": { ivory:"#F0F4F8", slate:"#102A43", clay:"#199473", oat:"#C6F7E2", olive:"#0C6B58", "gray-100":"#D9E2EC", "gray-300":"#9FB3C8", "gray-500":"#627D98", "gray-700":"#334E68" },
+    "blue-grey-mono": { ivory:"#F0F4F8", slate:"#102A43", clay:"#486581", oat:"#D9E2EC", olive:"#243B53", "gray-100":"#D9E2EC", "gray-300":"#9FB3C8", "gray-500":"#627D98", "gray-700":"#334E68" },
+    "red-warm":       { ivory:"#FAF9F7", slate:"#27241D", clay:"#A61B1B", oat:"#FFF3C4", olive:"#DE911D", "gray-100":"#E8E6E1", "gray-300":"#B8B2A7", "gray-500":"#857F72", "gray-700":"#504A40" },
+    "cyan-warm":      { ivory:"#FAF9F7", slate:"#27241D", clay:"#14919B", oat:"#BEF8FD", olive:"#0A6C74", "gray-100":"#E8E6E1", "gray-300":"#B8B2A7", "gray-500":"#857F72", "gray-700":"#504A40" },
+    "indigo-warm":    { ivory:"#FAF9F7", slate:"#27241D", clay:"#4055A8", oat:"#BED0F7", olive:"#2D3A8C", "gray-100":"#E8E6E1", "gray-300":"#B8B2A7", "gray-500":"#857F72", "gray-700":"#504A40" },
+    "blue-vivid":     { ivory:"#F5F7FA", slate:"#1F2933", clay:"#0552B5", oat:"#BAE3FF", olive:"#CF1124", "gray-100":"#E4E7EB", "gray-300":"#9AA5B1", "gray-500":"#616E7C", "gray-700":"#3E4C59" },
+    "light-blue-vivid":{ivory:"#F5F7FA", slate:"#1F2933", clay:"#1992D4", oat:"#B3ECFF", olive:"#0B69A3", "gray-100":"#E4E7EB", "gray-300":"#9AA5B1", "gray-500":"#616E7C", "gray-700":"#3E4C59" },
+    indigo:           { ivory:"#F5F7FA", slate:"#1F2933", clay:"#4055A8", oat:"#BED0F7", olive:"#2D3A8C", "gray-100":"#E4E7EB", "gray-300":"#9AA5B1", "gray-500":"#616E7C", "gray-700":"#3E4C59" },
+    "pink-vivid":     { ivory:"#F5F7FA", slate:"#1F2933", clay:"#BC0A6F", oat:"#FFE3EC", olive:"#870557", "gray-100":"#E4E7EB", "gray-300":"#9AA5B1", "gray-500":"#616E7C", "gray-700":"#3E4C59" },
+    "green-pure":     { ivory:"#F7F7F7", slate:"#222222", clay:"#2F8132", oat:"#C1EAC5", olive:"#0E5814", "gray-100":"#E1E1E1", "gray-300":"#B1B1B1", "gray-500":"#7E7E7E", "gray-700":"#515151" },
+  };
+
+  const switcher = document.querySelector("[data-palette-switcher]");
+  if (!switcher) return;
+  const trigger = switcher.querySelector(".palette-switcher__trigger");
+  const menu    = switcher.querySelector(".palette-switcher__menu");
+  const nameEl  = switcher.querySelector("[data-current-name]");
+  const options = switcher.querySelectorAll("[data-palette]");
+  const swatches = document.querySelectorAll(".swatch[data-token]");
+  const STORAGE_KEY = "example-palette";
+
+  const setOpen = (open) => {
+    trigger.setAttribute("aria-expanded", String(open));
+    menu.hidden = !open;
+  };
+
+  const updateSwatchLabels = (palette) => {
+    const data = PALETTE_DATA[palette];
+    if (!data) return;
+    swatches.forEach(sw => {
+      const token = sw.dataset.token;
+      const hexEl = sw.querySelector("[data-hex]");
+      if (hexEl && data[token]) hexEl.textContent = data[token].toUpperCase();
+    });
+  };
+
+  const apply = (palette, label) => {
+    if (palette === "anthropic") delete document.documentElement.dataset.palette;
+    else document.documentElement.dataset.palette = palette;
+    nameEl.textContent = label;
+    options.forEach(o => o.setAttribute("aria-current", o.dataset.palette === palette ? "true" : "false"));
+    updateSwatchLabels(palette);
+    try { localStorage.setItem(STORAGE_KEY, palette); } catch {}
+  };
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored && PALETTE_DATA[stored]) {
+      const opt = switcher.querySelector(`[data-palette="${stored}"]`);
+      if (opt) apply(stored, opt.dataset.label);
+    }
+  } catch {}
+
+  trigger.addEventListener("click", () => setOpen(trigger.getAttribute("aria-expanded") !== "true"));
+  options.forEach(o => o.addEventListener("click", () => {
+    apply(o.dataset.palette, o.dataset.label);
+    setOpen(false);
+  }));
+  document.addEventListener("click", e => { if (!switcher.contains(e.target)) setOpen(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+})();
+</script>
+</body>
+</html>
+</content>
+</invoke>
