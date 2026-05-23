@@ -61,8 +61,6 @@ The `examples/Green/` folder ships 20 reference HTML files covering every artifa
 - [`19-editor-feature-flags.html`](examples/Green/19-editor-feature-flags.html) — Feature flag editor UI
 - [`20-editor-prompt-tuner.html`](examples/Green/20-editor-prompt-tuner.html) — Support reply prompt tuner
 
-`examples/Green/05-design-system.html` and `examples/Green/14-research-feature-explainer.html` include an in-page palette switcher with named alternates for live comparison.
-
 ## Attribution
 
 The reference HTML files in `examples/` and `MANIFESTO.md` are adapted from [Thariq](https://twitter.com/trq212)'s [html-effectiveness project](https://thariqs.github.io/html-effectiveness/). The original "unreasonable effectiveness of HTML" thesis is entirely his work. This repo packages those examples as an installable agent skill and adds the stone/green palette.

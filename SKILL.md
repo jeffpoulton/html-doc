@@ -204,8 +204,5 @@ For arrows, define a single `<marker>` and reuse it. Example:
   in the stone/green palette. Read the closest match before writing.
 - `examples/Green/index.html` — the canonical catalog page; mirrors the
   design system in its purest form.
-- `examples/Green/05-design-system.html` and `examples/Green/14-research-feature-explainer.html`
-  also include a built-in palette switcher with named palettes for live
-  comparison if you need to evaluate alternatives.
 - `MANIFESTO.md` — the philosophical backing (Thariq's original post).
   Skim this if the user pushes back on "why HTML instead of markdown".
